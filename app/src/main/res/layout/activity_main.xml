@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/gj"
+        android:hint="GJ04BB"
+        android:textColor="@color/black"
+        android:textAlignment="center"
+        android:gravity="center_horizontal"></EditText>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/number"
+        android:hint="8898"
+        android:textColor="@color/black"
+        android:textAlignment="center"
+        android:gravity="center_horizontal"></EditText>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Get data"
+        android:id="@+id/getdata"></Button>
+
+        <LinearLayout
+            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="Registering Authority : "
+                android:textSize="15dp"
+                android:layout_height="wrap_content"></TextView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:id="@+id/registering"
+                android:textColor="#3F51B5"
+                android:textSize="15dp"
+                android:layout_height="wrap_content"></TextView>
+        </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="Registration No : "
+            android:textSize="15dp"
+            android:layout_height="wrap_content"></TextView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:id="@+id/registerednumber"
+            android:textSize="15dp"
+            android:textColor="#3F51B5"
+            android:layout_height="wrap_content"></TextView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="Registration Date : "
+            android:textSize="15dp"
+            android:layout_height="wrap_content"></TextView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:id="@+id/registrationDate"
+            android:textSize="15dp"
+            android:textColor="#3F51B5"
+            android:layout_height="wrap_content"></TextView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="Chassis No : "
+            android:textSize="15dp"
+            android:layout_height="wrap_content"></TextView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:id="@+id/chassisNumber"
+            android:textSize="15dp"
+            android:textColor="#3F51B5"
+            android:layout_height="wrap_content"></TextView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="Engine No : "
+            android:textSize="15dp"
+            android:layout_height="wrap_content"></TextView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:id="@+id/engineNumber"
+            android:textSize="15dp"
+            android:textColor="#3F51B5"
+            android:layout_height="wrap_content"></TextView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="Owner Name : "
+            android:textSize="15dp"
+            android:layout_height="wrap_content"></TextView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:id="@+id/ownerName"
+            android:textSize="15dp"
+            android:textColor="#3F51B5"
+            android:layout_height="wrap_content"></TextView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="Vehicle Class : "
+            android:textSize="15dp"
+            android:layout_height="wrap_content"></TextView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:id="@+id/vehicleClass"
+            android:textSize="15dp"
+            android:textColor="#3F51B5"
+            android:layout_height="wrap_content"></TextView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="Fuel Type"
+            android:textSize="15dp"
+            android:layout_height="wrap_content"></TextView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:id="@+id/fuelType"
+            android:textSize="15dp"
+            android:textColor="#3F51B5"
+            android:layout_height="wrap_content"></TextView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="Marker / Model"
+            android:textSize="15dp"
+            android:layout_height="wrap_content"></TextView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:id="@+id/markerModel"
+            android:textSize="15dp"
+            android:textColor="#3F51B5"
+            android:layout_height="wrap_content"></TextView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="Fitness Upto : "
+            android:textSize="15dp"
+            android:layout_height="wrap_content"></TextView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:id="@+id/fitnessUpto"
+            android:textSize="15dp"
+            android:textColor="#3F51B5"
+            android:layout_height="wrap_content"></TextView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="Insurance Upto : "
+            android:textSize="15dp"
+            android:layout_height="wrap_content"></TextView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:id="@+id/insuranceUpto"
+            android:textSize="15dp"
+            android:textColor="#3F51B5"
+            android:layout_height="wrap_content"></TextView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="Fuel Norms : "
+            android:textSize="15dp"
+            android:layout_height="wrap_content"></TextView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:id="@+id/fuelNorms"
+            android:textSize="15dp"
+            android:textColor="#3F51B5"
+            android:layout_height="wrap_content"></TextView>
+    </LinearLayout>
+
+    <com.agrawalsuneet.dotsloader.loaders.LazyLoader
+        android:layout_marginTop="50dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:id="@+id/myloader"
+        app:lazyloader_animDur="200"
+        app:lazyloader_dotsDist="5dp"
+        app:lazyloader_dotsRadius="15dp"
+        app:lazyloader_firstDelayDur="150"
+        app:lazyloader_firstDotColor="#673AB7"
+        app:lazyloader_interpolator="@android:anim/decelerate_interpolator"
+        app:lazyloader_secondDelayDur="300"
+        app:lazyloader_secondDotColor="#4CAF50"
+        app:lazyloader_thirdDotColor="#03A9F4"
+        android:visibility="invisible"
+        tools:ignore="MissingClass" />
+
+</LinearLayout>
