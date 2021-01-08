@@ -2,12 +2,17 @@ package com.example.newhtmlparsing;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
+import android.print.PrintAttributes;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.util.Log;
@@ -19,25 +24,35 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.agrawalsuneet.dotsloader.loaders.LazyLoader;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.PageSize;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
+import com.uttampanchasara.pdfgenerator.CreatePdf;
 
 import org.apache.commons.lang3.StringUtils;
+import org.jetbrains.annotations.NotNull;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.w3c.dom.Document;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.util.Map;
+
+import static android.os.Build.VERSION_CODES.M;
 
 public class MainActivity extends AppCompatActivity {
 
     Map cookeis;
-    String text,attr,sgj,snumber;
-    Document doc;
+    String text,attr,sgj,snumber,path,sreg,sregisteredNumber,sregistrationdate,sChassisNumber,sEngineNumber,sOwnerInfo,sVehicalClass,sFuelType,sMarkerModel,sFitnessUpto,sInsuranceUpto,sFuelNorms;
     LazyLoader lazyLoader;
     TextView registered,registrationNumber,registrationDate,chassisNo,engineNumber,ownerInfo,vehicleClass,fuelType,markerModel,fitnessUpto,insuranceUpto,fuelNorms;
-    Button getdata;
+    Button getdata,print;
     EditText gj,number;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -60,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
         fitnessUpto=findViewById(R.id.fitnessUpto);
         insuranceUpto=findViewById(R.id.insuranceUpto);
         fuelNorms=findViewById(R.id.fuelNorms);
+        print=findViewById(R.id.print);
 
         /*gj.setFilters(new InputFilter[] {new InputFilter.AllCaps()});*/
 
@@ -73,13 +89,45 @@ public class MainActivity extends AppCompatActivity {
         lazyLoader.addView(loader);
 
 
+        print.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = M)
+            @Override
+            public void onClick(View v) {
+
+                sgj=gj.getText().toString().trim();
+                snumber=number.getText().toString().trim();
+
+                if(sgj.isEmpty() || snumber.isEmpty())
+                {
+                    Toast.makeText(MainActivity.this, "Enter the number", Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    if(Build.VERSION.SDK_INT>= M)
+                    {
+                        if(ContextCompat.checkSelfPermission(MainActivity.this,Manifest.permission.WRITE_EXTERNAL_STORAGE)!=PackageManager.PERMISSION_GRANTED)
+                        {
+                            ActivityCompat.requestPermissions(MainActivity.this,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
+                        }
+                        else
+                        {
+                            callRtodata();
+                            savePdf();
+                        }
+                    }
+
+
+
+                }
+
+            }
+        });
+
         /*gj.setFilters(new InputFilter[] { new InputFilter.LengthFilter(6) });*/
 
         getdata.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
 
                 sgj=gj.getText().toString().trim();
                 snumber=number.getText().toString().trim();
@@ -101,16 +149,9 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void run() {
 
-
-                            Content content=new Content();
-                            content.execute();
-
+                            callRtodata();
                         }
                     },2000);
-
-
-
-
 
                 }
 
@@ -118,6 +159,67 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void callRtodata()
+    {
+        Content content=new Content();
+        content.execute();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    private void savePdf()
+    {
+        try {
+
+            path= Environment.getExternalStorageDirectory().getAbsolutePath() + "/RtoPdf";
+
+
+
+            File dir=new File(path);
+            if(!dir.exists())
+            {
+                dir.mkdirs();
+            }
+
+
+            new CreatePdf(this)
+                    .setPdfName(sOwnerInfo)
+                    .openPrintDialog(false)
+                    .setContentBaseUrl(null)
+                    .setPageSize(PrintAttributes.MediaSize.ISO_A4)
+                    .setContent("Registering Authority : "+sreg+"  Registration No : "+sregisteredNumber+""+"  Registration Date : "+sregistrationdate+"\n\n"+"  Chassis No : "+sChassisNumber+"\n\n"+"  Engine No : "+sEngineNumber+"\n\n"+"  Owner Name : "+sOwnerInfo+"\n\n"+"  Vehical Class : "+sVehicalClass+"\n\n"+"  Fuel Type : "+sFuelType+"\n\n"+"  Marker / Model : "+sMarkerModel+"\n\n"+"  Fitness Upto : "+sFitnessUpto+"\n\n"+"  Insurance Upto : "+sInsuranceUpto+"\n\n"+"  Fuel Norms : "+sFuelNorms+"\n\n")
+                    .setFilePath(path)
+                    .setCallbackListener(new CreatePdf.PdfCallbackListener() {
+                        @Override
+                        public void onFailure(@NotNull String s) {
+                            // handle error
+                            Toast.makeText(MainActivity.this, "Error Bro", Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void onSuccess(@NotNull String s) {
+                            // do your stuff here
+
+                            Toast.makeText(MainActivity.this, "pdf created", Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .create();
+
+
+
+            /*PdfWriter.getInstance(doc,new FileOutputStream(dir));
+
+            doc.open();
+
+            doc.addAuthor(sOwnerInfo);
+            doc.add(new Paragraph(sChassisNumber));
+            doc.close();
+            Toast.makeText(this, "pdf created", Toast.LENGTH_SHORT).show();*/
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private class Content extends AsyncTask<Void,Void,Void>
@@ -188,74 +290,85 @@ public class MainActivity extends AppCompatActivity {
                 String part2 = parts[1];
                 parts = part2.split("</div>");
                 part2 = parts[0];
-                registered.setText(StringUtils.substring(part2,0,part2.length()-25));
-
+                sreg=StringUtils.substring(part2,0,part2.length()-25);
+                registered.setText(sreg);
 
                 String[] parts3 = text.split("<td style=\"width: 45%\"><span class=\"\">");
                 String part4 = parts3[1];
                 parts3 = part4.split("</span></td>");
                 part4 = parts3[0];
+                sregisteredNumber=part4;
                 registrationNumber.setText(part4);
 
                 String[] parts5 = text.split("<td style=\"width: 15%\"><span class=\"font-bold\">Registration Date:</span></td>");
                 String part6 = parts5[1];
                 parts5 = part6.split("</td>");
                 part6 = parts5[0];
+                sregistrationdate=part6;
                 registrationDate.setText(part6.substring(37));
 
                 String[] parts7 = text.split("<td><span class=\"font-bold\">Chassis No:</span></td>");
                 String part8 = parts7[1];
                 parts7 = part8.split("</td>");
                 part8 = parts7[0];
-                chassisNo.setText(part8.substring(37));
+                sChassisNumber=part8.substring(37);
+                chassisNo.setText(sChassisNumber);
 
                 String[] parts9 = text.split("<td><span class=\"font-bold\">Engine No:</span></td>");
                 String part10 = parts9[1];
                 parts9 = part10.split("</td>");
                 part10 = parts9[0];
-                engineNumber.setText(part10.substring(37));
+                sEngineNumber=part10.substring(37);
+                engineNumber.setText(sEngineNumber);
 
                 String[] parts11 = text.split("<td><span class=\"font-bold\">Owner Name:</span> </td>");
                 String part12 = parts11[1];
                 parts11 = part12.split("</td>");
                 part12 = parts11[0];
-                ownerInfo.setText(part12.substring(49));
+                sOwnerInfo=part12.substring(49);
+                ownerInfo.setText(sOwnerInfo);
 
                 String[] parts13 = text.split("<td><span class=\"font-bold\">Vehicle Class:</span> </td>");
                 String part14 = parts13[1];
                 parts13 = part14.split("</td>");
                 part14 = parts13[0];
-                vehicleClass.setText(part14.substring(37));
+                sVehicalClass=part14.substring(37);
+                vehicleClass.setText(sVehicalClass);
 
                 String[] parts15 = text.split("<td><span class=\"font-bold\">Fuel Type:</span></td>");
                 String part16 = parts15[1];
                 parts15 = part16.split("</td>");
                 part16 = parts15[0];
-                fuelType.setText(part16.substring(37));
+                sFuelType=part16.substring(37);
+                fuelType.setText(sFuelType);
 
                 String[] parts17 = text.split("<td><span class=\"font-bold\">Maker / Model:</span></td>");
                 String part18 = parts17[1];
                 parts17 = part18.split("</td>");
                 part18 = parts17[0];
-                markerModel.setText(part18.substring(49));
+                sMarkerModel=part18.substring(49);
+                markerModel.setText(sMarkerModel);
 
                 String[] parts19 = text.split("<td><span class=\"font-bold\">Fitness Upto:</span></td>");
                 String part20 = parts19[1];
                 parts19 = part20.split("</td>");
                 part20 = parts19[0];
-                fitnessUpto.setText(part20.substring(37));
+                sFitnessUpto=part20.substring(37);
+                fitnessUpto.setText(sFitnessUpto);
 
                 String[] parts21 = text.split("<td><span class=\"font-bold\">Insurance Upto:</span></td>");
                 String part22 = parts21[1];
                 parts21 = part22.split("</td>");
                 part22 = parts21[0];
-                insuranceUpto.setText(part22.substring(37));
+                sInsuranceUpto=part22.substring(37);
+                insuranceUpto.setText(sInsuranceUpto);
 
                 String[] parts23 = text.split("<td><span class=\"font-bold\">Fuel Norms:</span> </td>");
                 String part24 = parts23[1];
                 parts23 = part24.split("</td>");
                 part24 = parts23[0];
-                fuelNorms.setText(part24.substring(37));
+                sFuelNorms=part24.substring(37);
+                fuelNorms.setText(sFuelNorms);
 
             }
             lazyLoader.setVisibility(View.INVISIBLE);
