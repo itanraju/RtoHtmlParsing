@@ -34,9 +34,9 @@
         android:id="@+id/getdata"></Button>
 
         <LinearLayout
-            android:layout_marginTop="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal">
             <TextView
                 android:layout_width="wrap_content"
@@ -53,6 +53,7 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal">
         <TextView
             android:layout_width="wrap_content"
@@ -70,6 +71,7 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal">
         <TextView
             android:layout_width="wrap_content"
@@ -87,6 +89,7 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal">
         <TextView
             android:layout_width="wrap_content"
@@ -104,6 +107,7 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal">
         <TextView
             android:layout_width="wrap_content"
@@ -121,6 +125,7 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal">
         <TextView
             android:layout_width="wrap_content"
@@ -138,6 +143,7 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal">
         <TextView
             android:layout_width="wrap_content"
@@ -155,10 +161,11 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal">
         <TextView
             android:layout_width="wrap_content"
-            android:text="Fuel Type"
+            android:text="Fuel Type : "
             android:textSize="15dp"
             android:layout_height="wrap_content"></TextView>
         <TextView
@@ -172,10 +179,11 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal">
         <TextView
             android:layout_width="wrap_content"
-            android:text="Marker / Model"
+            android:text="Marker / Model : "
             android:textSize="15dp"
             android:layout_height="wrap_content"></TextView>
         <TextView
@@ -189,6 +197,7 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal">
         <TextView
             android:layout_width="wrap_content"
@@ -206,6 +215,7 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal">
         <TextView
             android:layout_width="wrap_content"
@@ -223,6 +233,7 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal">
         <TextView
             android:layout_width="wrap_content"
@@ -237,6 +248,8 @@
             android:layout_height="wrap_content"></TextView>
     </LinearLayout>
 
+
+
     <com.agrawalsuneet.dotsloader.loaders.LazyLoader
         android:layout_marginTop="50dp"
         android:layout_width="20dp"
@@ -246,7 +259,7 @@
         android:id="@+id/myloader"
         app:lazyloader_animDur="200"
         app:lazyloader_dotsDist="5dp"
-        app:lazyloader_dotsRadius="15dp"
+        app:lazyloader_dotsRadius="12dp"
         app:lazyloader_firstDelayDur="150"
         app:lazyloader_firstDotColor="#673AB7"
         app:lazyloader_interpolator="@android:anim/decelerate_interpolator"
