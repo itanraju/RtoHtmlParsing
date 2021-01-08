@@ -8,6 +8,8 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.InputFilter;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
@@ -59,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
         insuranceUpto=findViewById(R.id.insuranceUpto);
         fuelNorms=findViewById(R.id.fuelNorms);
 
+        /*gj.setFilters(new InputFilter[] {new InputFilter.AllCaps()});*/
 
         lazyLoader=findViewById(R.id.myloader);
 
@@ -68,6 +71,9 @@ public class MainActivity extends AppCompatActivity {
         loader.setInterpolator(new LinearInterpolator());
         loader.setTouchscreenBlocksFocus(false);
         lazyLoader.addView(loader);
+
+
+        /*gj.setFilters(new InputFilter[] { new InputFilter.LengthFilter(6) });*/
 
         getdata.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -144,10 +150,8 @@ public class MainActivity extends AppCompatActivity {
                         .data("form_rcdl:tf_reg_no1",sgj)
                         .data("form_rcdl:tf_reg_no2",snumber)
                         .data("javax.faces.ViewState",attr)
-                        .header("Content-Type", "application/x-www-form-urlencoded").header("Host", "parivahan.gov.in").header("Accept", "application/xml, text/xml, */*; q=0.01").header("Accept-Language", "en-US,en;q=0.5").header("Accept-Encoding", "gzip, deflate, br").header("X-Requested-With", "XMLHttpRequest").header("Faces-Request", "partial/ajax").header("Origin", "https://parivahan.gov.in")
                         .userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36")
                         .cookies(cookeis)
-                         .timeout(1000)
                          .execute().body();
 
             }
