@@ -29,6 +29,7 @@ import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfBoolean;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.uttampanchasara.pdfgenerator.CreatePdf;
 
@@ -229,7 +230,7 @@ public class MainActivity extends AppCompatActivity {
 
             try {
 
-            Connection.Response execute= Jsoup.connect("https://parivahan.gov.in/rcdlstatus/?pur_cd=102").execute();
+            Connection.Response execute= Jsoup.connect("https://parivahan.gov.in/rcdlstatus/?pur_cd=102").validateTLSCertificates(false).followRedirects(true).ignoreHttpErrors(true).method(Connection.Method.GET).execute();
 
             if(execute.statusCode()<=500)
             {
@@ -242,19 +243,9 @@ public class MainActivity extends AppCompatActivity {
                 }
                  attr = element.attr("value");
 
-                 text=Jsoup.connect("https://parivahan.gov.in/rcdlstatus/?pur_cd=102")
-                        .data("javax.faces.partial.ajax","true")
-                        .data("javax.faces.source","form_rcdl:j_idt42")
-                        .data("javax.faces.partial.execute","@all")
-                        .data("javax.faces.partial.render","form_rcdl:pnl_show form_rcdl:pg_show form_rcdl:rcdl_pnl")
-                        .data("form_rcdl:j_idt42","form_rcdl:j_idt42")
-                        .data("form_rcdl","form_rcdl")
-                        .data("form_rcdl:tf_reg_no1",sgj)
-                        .data("form_rcdl:tf_reg_no2",snumber)
-                        .data("javax.faces.ViewState",attr)
-                        .userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36")
-                        .cookies(cookeis)
-                         .execute().body();
+                    String btn= Jsoup.parse(execute.body()).getElementsByAttributeValueStarting("id", "form_rcdl:j_idt").select("button").get(0).attr("id").trim();
+                    text= Jsoup.connect("https://parivahan.gov.in/rcdlstatus/vahan/rcDlHome.xhtml").validateTLSCertificates(false).followRedirects(true).method(Connection.Method.POST).cookies(cookeis).referrer("https://parivahan.gov.in/rcdlstatus/?pur_cd=102").header("Content-Type", "application/x-www-form-urlencoded").header("Host", "parivahan.gov.in").header("Accept", "application/xml, text/xml, */*; q=0.01").header("Accept-Language", "en-US,en;q=0.5").header("Accept-Encoding", "gzip, deflate, br").header("X-Requested-With", "XMLHttpRequest").header("Faces-Request", "partial/ajax").header("Origin", "https://parivahan.gov.in").userAgent("Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36").data("javax.faces.partial.ajax", PdfBoolean.TRUE).data("javax.faces.source", btn).data("javax.faces.partial.execute", "@all").data("javax.faces.partial.render", "form_rcdl:pnl_show form_rcdl:pg_show form_rcdl:rcdl_pnl").data(btn,btn).data("form_rcdl", "form_rcdl").data("form_rcdl:tf_reg_no1", sgj).data("form_rcdl:tf_reg_no2", snumber).data("javax.faces.ViewState", attr).execute().body();
+
 
             }
 
@@ -274,17 +265,23 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
 
+
             Log.d("cookies",cookeis.toString());
 
             Log.d("text",text);
 
             Log.d("attr",attr);
 
+            Log.d("updated","updated");
+
             if(text.contains("Registration No. does not exist!!! Please check the number."))
             {
                 Toast.makeText(MainActivity.this, "No Record Found", Toast.LENGTH_SHORT).show();
             }
             else {
+
+
+                Log.d("tdata",text);
 
                 String[] parts = text.split("Registering Authority:  ");
                 String part2 = parts[1];
@@ -369,7 +366,6 @@ public class MainActivity extends AppCompatActivity {
                 part24 = parts23[0];
                 sFuelNorms=part24.substring(37);
                 fuelNorms.setText(sFuelNorms);
-
             }
             lazyLoader.setVisibility(View.INVISIBLE);
             super.onPostExecute(aVoid);
